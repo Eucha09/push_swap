@@ -65,7 +65,7 @@ int		ft_stack_bottom_second(t_stack *stack); // 아래에서 2번째 원소 반�
 
 ### 명령어 구현
 
-스택 2개를 구조체 하나로 묶었고 명령어들을 함수화하여 구현하였다.
+스택 a와 b를 구조체 하나로 묶었고 명령어들을 함수화하여 구현하였다.
 
 ```c
 typedef struct s_stack_pair
