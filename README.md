@@ -27,7 +27,68 @@
 
 ### 스택 구현
 
+동적배열 방식으로 구현하였다.   
+기존 스택과 다른 점은 나중 rotate 연산을 구현하기 위해 위 아래 다 push와 pop이 가능하도록 구현하였다. (사실상 원형 deque 구조를 띄고 있음)
+
+**스택 구조체**
+
+```c
+typedef struct s_stack
+{
+	int	*arr; // 실제 원소들을 담고 있을 배열
+	int	capacity; // 배열 전체 용량
+	int	top; // 스택의 top을 가리키는 인덱스
+	int	bottom; // 스택의 bottom을 가리키는 인덱스
+}	t_stack;
+```
+
+**구현한 함수**
+
+```c
+t_stack	*ft_stack_new(void); // 스택 생성
+void	ft_stack_clear(t_stack *stack); // 스택 free
+int		ft_stack_size(t_stack *stack); // 스택 사이즈 반환
+
+void	ft_stack_push(t_stack *stack, int value); // push_top과 동일
+void	ft_stack_push_top(t_stack *stack, int value); // 스택에서 제일 위에 삽입
+void	ft_stack_push_bottom(t_stack *stack, int value); // 스택에서 제일 아래에 삽입
+
+int		ft_stack_pop(t_stack *stack); // pop_top과 동일
+int		ft_stack_pop_top(t_stack *stack); // 스택에서 제일 위에 있는 원소를 꺼내 반환
+int		ft_stack_pop_bottom(t_stack *stack); // 스택에서 제일 아래에 있는 원소를 꺼내 반환 
+
+int		ft_stack_top_first(t_stack *stack); // 제일 위에 있는 원소 반환
+int		ft_stack_top_second(t_stack *stack); // 위에서 2번째 원소 반환
+int		ft_stack_bottom_first(t_stack *stack); // 제일 아래에 있는 원소 반환
+int		ft_stack_bottom_second(t_stack *stack); // 아래에서 2번째 원소 반환
+```
+
 ### 명령어 구현
+
+스택 2개를 구조체 하나로 묶었고 명령어들을 함수화하여 구현하였다.
+
+```c
+typedef struct s_stack_pair
+{
+	t_stack	*a;
+	t_stack	*b;
+}	t_stack_pair;
+
+t_stack_pair	*stack_pair_new(void);
+void			stack_pair_clear(t_stack_pair *s);
+
+void			sa(t_stack_pair *s);
+void			sb(t_stack_pair *s);
+void			ss(t_stack_pair *s);
+void			pa(t_stack_pair *s);
+void			pb(t_stack_pair *s);
+void			ra(t_stack_pair *s);
+void			rb(t_stack_pair *s);
+void			rr(t_stack_pair *s);
+void			rra(t_stack_pair *s);
+void			rrb(t_stack_pair *s);
+void			rrr(t_stack_pair *s);
+```
 
 ### push_swap 정렬 알고리즘 구현
 
