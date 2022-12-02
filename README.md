@@ -125,6 +125,7 @@ void	push_swap_sort(t_stack_pair *s, int size, int order)
 {
 	int	seg_size[3];
 
+	// size가 2이하일 경우 분할할 필요없이 swap 연산만으로 정렬
 	if (size <= 2)
 		return (sort_size2(s, size, order));
 	
