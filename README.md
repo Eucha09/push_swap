@@ -92,3 +92,56 @@ void		rrr(t_stack_pair *s);
 
 ### push_swap 정렬 알고리즘 구현
 
+```
+Stack	   a		   b
+
+		*     *     *     *
+		*     *     *     *
+		*  0  *     *  1  *
+		*     *     *     *
+		* --- *     * --- *
+		*     *     *     *
+		*  3  *     *  2  *
+		*     *     *     *
+		* * * *	    * * * *
+```
+
+스택을 위와 같이 4개의 구역으로 나누었다.
+
+x구역의 원소를 y구역으로 이동시키려면 아래와 같이 명령어를 호출하면 된다.   
+x -> y   
+0 -> 1 : ```pb```   
+0 -> 2 : ```pb``` ```rb```   
+0 -> 3 : ```ra```   
+...
+
+정렬은 병합정렬 알고리즘 방식을 사용하였다.
+
+초기 원소들이 구역 0에 모여있다고 하였을 때   
+스택 내 원소들의 배열을 3개의 균등한 크기로 분할하고 각 분할된 부분 배열을 정렬한 다음, 3개의 정렬된 부분 배열을 병합하여 전체가 정렬된 배열이 되게 하는 방식으로 구현하였다.
+
+```c
+void	push_swap_sort(t_stack_pair *s, int size, int order)
+{
+	int	seg_size[3];
+
+	if (size <= 2)
+		return (sort_size2(s, size, order));
+	
+	// 전체 size를 3개의 균일한 크기로 분할
+	seg_size[1] = size / 3;
+	seg_size[0] = (size - (seg_size[1])) / 2;
+	seg_size[2] = size - seg_size[0] - seg_size[1];
+
+	// 각 분할된 부분 배열을 정렬하고 다른 구역으로 옮겨놓는다.
+	push_swap_sort(s, seg_size[0], order);
+	move_stack(s, 0, 1, seg_size[0]); // 0 -> 1
+	push_swap_sort(s, seg_size[1], order);
+	move_stack(s, 0, 2, seg_size[1]); // 0 -> 2
+	push_swap_sort(s, seg_size[2], order);
+	move_stack(s, 0, 3, seg_size[2]); // 0 -> 3
+
+	// 다른 구역에 있는 정렬된 부분 배열들을 합친다.
+	merge(s, seg_size, order);
+}
+```
